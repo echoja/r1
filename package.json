@@ -3,10 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "watch": "tsc --watch",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview"
   },
   "dependencies": {
+    "@netlify/functions": "^0.7.2",
+    "@types/node": "^15.0.2",
     "vue": "^3.0.5"
   },
   "devDependencies": {
