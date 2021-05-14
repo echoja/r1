@@ -8,6 +8,7 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    // "plugins": [""],
     "lib": [
       "esnext",
       "dom"
@@ -22,9 +23,9 @@
     "listFilesOnly": true,
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
+    "client/src/**/*.ts",
+    "client/src/**/*.d.ts",
+    "client/src/**/*.tsx",
+    "client/src/**/*.vue"
   ],
 }
