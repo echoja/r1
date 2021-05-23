@@ -23,9 +23,10 @@
     "listFilesOnly": true,
   },
   "include": [
-    "client/src/**/*.ts",
-    "client/src/**/*.d.ts",
-    "client/src/**/*.tsx",
-    "client/src/**/*.vue"
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "../typedef.ts"
   ],
 }

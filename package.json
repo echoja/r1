@@ -1,7 +1,6 @@
 {
   "name": "research-s",
   "description": "Elvanov Research Project Codename S",
-
   "version": "0.0.1",
   "repository": {
     "type": "git",
@@ -11,7 +10,8 @@
     "dev": "vite",
     "watch": "tsc --watch",
     "build": "vue-tsc -p client --noEmit && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "test": "ts-node ./test/tedious.spec.ts"
   },
   "bugs": {
     "url": "https://gitlab.com/EzKorry/research-s/issues"
@@ -19,6 +19,9 @@
   "dependencies": {
     "@netlify/functions": "^0.7.2",
     "@types/node": "^15.0.2",
+    "@types/tedious": "^4.0.3",
+    "dotenv": "^9.0.2",
+    "tedious": "^11.0.8",
     "vue": "^3.0.5"
   },
   "devDependencies": {

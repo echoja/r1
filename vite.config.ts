@@ -7,7 +7,7 @@ export default defineConfig({
     vue(),
   ],
   root: './client',
-  publicDir: './client/public',
+  // publicDir: './client/public',
   server: {
     port: 29537,
   },
