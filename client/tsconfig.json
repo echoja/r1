@@ -21,6 +21,12 @@
     "skipLibCheck": true,
     "diagnostics": true,
     "listFilesOnly": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+    }
   },
   "include": [
     "src/**/*.ts",

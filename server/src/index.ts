@@ -1,14 +1,27 @@
-import * as express from "express";
-import * as history from "connect-history-api-fallback";
-import * as path from "path";
-import { apiRouter } from "./router";
+import express from "express";
+import history from "connect-history-api-fallback";
+import path from "path";
+import { apiRouter } from "@/router";
+import { TestInterface } from "@typedef";
 
 const app = express();
-app.use("/app", history());
-app.get("/app", express.static("../web-dist"));
+app.use(
+  "/app",
+  (req, res, next) => {
+    console.dir(req, { depth: 0 });
+    if (req.originalUrl === "/app") res.redirect("/app/");
+    else next();
+  },
+  // history
+  history({
+    verbose: true,
+  }),
+  // static
+  express.static(path.resolve(__dirname, "../web-dist"))
+);
+console.log(path.resolve(__dirname, "../web-dist"));
 app.use("/api", apiRouter);
-
-app.listen(5000, function () {
-  console.log(`Express serving on 5000!, node: ${process.env.NODE_ENV}`);
-  
+const port = process.env.NODE_ENV === "development" ? 29540 : 80;
+app.listen(port, function () {
+  console.log(`Express serving on ${port}, node: ${process.env.NODE_ENV}`);
 });

@@ -2,20 +2,27 @@
   "compilerOptions": {
     "declaration": true,
     "lib": ["es2020"],
-    "module": "commonJS",
+    "module": "ES2020",
     "moduleResolution": "node",
     "removeComments": true,
+    "esModuleInterop": true,
     "sourceMap": true,
     "strict": true,
     "target": "es2020",
-    "outDir": "./dist",
+    "outDir": "./build",
     "incremental": true,
+    "baseUrl": "../",
+    "paths": {
+      "@/*": ["server/src/*"],
+      "@typedef": ["typedef"]
+    }
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "../typedef.ts",
   ],
   "exclude": [
-    "dist",
+    "build",
     "node_modules"
   ]
 }

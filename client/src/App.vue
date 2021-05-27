@@ -1,9 +1,13 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
-  <span>
-    {{ a }}
-  </span>
+  <div>
+    this is App
+  </div>
+  <div>
+
+  <router-link class="mr-3" :to="{name: 'Home'}">홈</router-link>
+  <router-link :to="{name: 'About'}">어바웃</router-link>
+  </div>
+  <router-view></router-view>
 </template>
 
 <script lang="ts">
