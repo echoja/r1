@@ -2,10 +2,9 @@
   "compilerOptions": {
     "declaration": true,
     "lib": ["es2020"],
-    "module": "ES2020",
-    "moduleResolution": "node",
+    "module": "commonJS",
+    "moduleResolution": "Node",
     "removeComments": true,
-    "esModuleInterop": true,
     "sourceMap": true,
     "strict": true,
     "target": "es2020",
