@@ -1,42 +1,50 @@
 <template>
-  <div>
-    this is App
+  <div class="text-4xl mb-3 font-bold mt-4">Research</div>
+  <div class="p-3">
+    <router-link class="mr-3" :to="{ name: 'Home' }">Home</router-link>
+    <router-link class="mr-3" :to="{ name: 'About' }">About</router-link>
+    <router-link :to="{ name: 'Practice' }"><b>Practice</b></router-link>
   </div>
-  <div>
-
-  <router-link class="mr-3" :to="{name: 'Home'}">홈</router-link>
-  <router-link :to="{name: 'About'}">어바웃</router-link>
-  </div>
+  <hr class="mb-4">
   <router-view></router-view>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+import { defineComponent, ref } from "vue";
+import HelloWorld from "./components/HelloWorld.vue";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    HelloWorld,
   },
   props: {
     lang: String,
   },
   setup(props) {
     return {
-      a: 'hello',
-    }
+      a: "hello",
+      number: ref(0),
+    };
+  },
+  methods: {
+    addNumber() {
+      this.number++;
+    },
   },
 });
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Noto Sans KR', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+.title {
+  font-size: 30px;
 }
 </style>

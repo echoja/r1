@@ -1,14 +1,18 @@
-FROM node:14 AS client
+FROM node:14 AS client-build
 
-WORKDIR /
+WORKDIR /client
 
-COPY ./package.json ./package.json
-COPY ./package-lock.json ./package-lock.json
+COPY ./client/packag*.json ./
 RUN npm install
 
-COPY ./client ./client
-COPY ./*.config.js ./
-COPY ./*.config.ts ./
+COPY ./client/*.config.js ./
+COPY ./client/*.config.ts ./
+COPY ./client/tsconfig.json ./
+COPY ./client/public ./public
+COPY ./client/src ./src
+COPY ./client/index.html ./
+
+
 COPY ./typedef.ts ./
 
 RUN npm run build
@@ -33,9 +37,9 @@ WORKDIR /
 COPY ./server/packag*.json ./
 RUN npm install --production
 
-COPY --from=client /client/dist ./web-dist
+COPY --from=client-build /client/dist ./web-dist
 COPY --from=server-build-bundle /server/bundle ./bundle
 
 ENV NODE_ENV production
 
-ENTRYPOINT [ "node",  "./bundle/index.js" ]
+ENTRYPOINT [ "npm", "run", "start"]

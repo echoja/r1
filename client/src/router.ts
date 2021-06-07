@@ -13,6 +13,11 @@ const routes: VueRouter.RouteRecordRaw[] = [
     path: "/about",
     component: () => import("@/views/About.vue"),
   },
+  {
+    name: "Practice",
+    path: "/practice",
+    component: () => import("@/views/Practice.vue"),
+  },
 ];
 
 // 3. Create the router instance and pass the `routes` option
@@ -20,7 +25,6 @@ const routes: VueRouter.RouteRecordRaw[] = [
 // keep it simple for now.
 export default VueRouter.createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
-  history: VueRouter.createWebHistory('/app/'),
+  history: VueRouter.createWebHistory("/app/"),
   routes, // short for `routes: routes`
-
 });
