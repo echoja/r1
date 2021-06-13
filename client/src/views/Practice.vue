@@ -103,7 +103,6 @@
       <button @click="addEasyNumber">쉬운 숫자 추가</button>
     </div>
     <Icon :icon="icons.chart" height="24" />
-    <ElButton>버튼입니다.</ElButton>
 
   </div>
 </template>
@@ -112,13 +111,11 @@
 <script>
 import { Icon } from "@iconify/vue";
 import areaChartOutlined from "@iconify-icons/ant-design/area-chart-outlined";
-import { ElButton } from 'element-plus';
 import { onMounted, ref } from "vue";
 export default {
   name: "Practice",
   components: {
     Icon,
-    ElButton,
   },
   setup(props, ctx) {
     onMounted(() => {

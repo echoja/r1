@@ -1,0 +1,25 @@
+{
+  "name": "research-s",
+  "version": "1.0.0",
+  "description": "## 프론트엔드",
+  "main": "vetur.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/EzKorry/research-s.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/EzKorry/research-s/issues"
+  },
+  "homepage": "https://gitlab.com/EzKorry/research-s#readme",
+  "devDependencies": {
+    "@types/tedious": "^4.0.3"
+  }
+}

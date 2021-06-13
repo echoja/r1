@@ -21,10 +21,16 @@
     "skipLibCheck": true,
     "diagnostics": true,
     "listFilesOnly": true,
-    "baseUrl": ".",
+    "baseUrl": "../",
     "paths": {
       "@/*": [
-        "src/*"
+        "client/src/*",
+      ],
+      "@type": [
+        "types"
+      ],
+      "@const": [
+        "const"
       ],
     }
   },
@@ -33,6 +39,7 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "../typedef.ts"
+    "../types.d.ts",
+    "../const.ts",
   ],
 }

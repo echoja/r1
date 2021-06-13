@@ -2,41 +2,7 @@
 
 @tailwind base;
 
-@layer base {
-  p {
-    @apply mb-1;
-  }
-  h1 {
-    @apply text-4xl mb-4 font-bold;
-  }
-  h2 {
-    @apply text-3xl mb-3 font-semibold;
-  }
-  h3 {
-    @apply text-xl mb-2;
-  }
-  h4 {
-    @apply text-lg mb-1;
-  }
-  a {
-    @apply text-blue-600 underline;
-  }
-
-  ul {
-    @apply list-disc pl-4 ml-4;
-  }
-  ol {
-    @apply list-decimal pl-4 ml-4;
-  }
-
-  textarea, input[type=text] {
-    @apply border;
-  }
-  hr {
-    @apply my-4;
-  }
-
-}
+@layer base {}
 
 @tailwind components;
 @tailwind utilities;

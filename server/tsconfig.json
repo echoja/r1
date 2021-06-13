@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "lib": ["es2020"],
+    "lib": [
+      "es2020"
+    ],
     "module": "commonJS",
     "moduleResolution": "Node",
     "removeComments": true,
@@ -12,13 +14,21 @@
     "incremental": true,
     "baseUrl": "../",
     "paths": {
-      "@/*": ["server/src/*"],
-      "@typedef": ["typedef"]
+      "@/*": [
+        "server/src/*"
+      ],
+      "@type": [
+        "types.d"
+      ],
+      "@const": [
+        "const"
+      ]
     }
   },
   "include": [
     "src/**/*",
-    "../typedef.ts",
+    "../types.d.ts",
+    "../const.ts"
   ],
   "exclude": [
     "build",

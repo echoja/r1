@@ -5,8 +5,14 @@
     <router-link class="mr-3" :to="{ name: 'About' }">About</router-link>
     <router-link :to="{ name: 'Practice' }"><b>Practice</b></router-link>
   </div>
-  <hr class="mb-4">
-  <router-view></router-view>
+  <hr class="mb-4" />
+  <router-view v-slot="{ Component }">
+    <transition>
+      <keep-alive>
+        <component :is="Component"></component>
+      </keep-alive>
+    </transition>
+  </router-view>
 </template>
 
 <script lang="ts">
@@ -37,7 +43,7 @@ export default defineComponent({
 
 <style>
 #app {
-  font-family: 'Noto Sans KR', Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Noto Sans KR", Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

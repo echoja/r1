@@ -1,4 +1,6 @@
 import * as tedious from "tedious";
+import { searchGroupKey } from "@type";
+import { ColumnValue } from "./types";
 
 export const dbConenct = (connection: tedious.Connection): Promise<void> => {
   return new Promise((resolve, reject) => {
@@ -24,11 +26,6 @@ export function dbRequest<Row = any>(
       }
       resolve({ rows, rowCount });
     });
-    request.on('row', function(columns) {
-      columns.forEach(function(column) {
-        console.log(column.value);
-      });
-    });
     connection.execSql(request);
   });
 }
@@ -37,6 +34,9 @@ export const dbConfig: tedious.ConnectionConfig = {
   server: process.env.DB_HOST, // or "localhost"
   options: {
     encrypt: false,
+    rowCollectionOnDone: true,
+    rowCollectionOnRequestCompletion: true,
+    database: "Drug_Current",
   },
   authentication: {
     type: "default",
@@ -47,14 +47,44 @@ export const dbConfig: tedious.ConnectionConfig = {
   },
 };
 
-const connection = new tedious.Connection(dbConfig);
+
 
 export const dbTest = async (): Promise<void> => {
   try {
     await dbConenct(connection);
-    const res = await dbRequest(connection, "select 42, 'hello world'");
-    console.log(res);
+    const res = await dbRequest(
+      connection,
+      "EXEC SP_Drug_Search_by_CodeGroup 'I', 'acetaminophen';"
+    );
   } catch (e) {
     console.error(e);
   }
 };
+
+const connection = new tedious.Connection(dbConfig);
+
+type DrugSearchResult = ReadonlyArray<Record<string, string>>;
+
+export function organizeDbResponse<T>(rows: ColumnValue<T>[][]): Record<string, T>[] {
+  const result: Record<string, T>[] = [];
+  rows.forEach((row) => {
+    const new_row:Record<string, T> = {};
+    row.forEach((colValue) => {
+      new_row[colValue.metadata.colName] = colValue.value;
+    })
+    result.push(new_row);
+  });
+  return result;
+}
+
+export async function drugSearch(group: searchGroupKey, search: string): Promise<DrugSearchResult> {
+  if (group == "all")
+  {
+    return [];
+  }
+  const sql = `EXEC SP_Drug_Search_by_CodeGroup '${group}', '${search}';`
+  const res = await dbRequest(connection, sql);
+  // const res = await dbRequest<ColumnValue<string>[]>(connection, sql);
+  const result = organizeDbResponse<string>(res.rows);
+  return result;
+}
