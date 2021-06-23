@@ -8,7 +8,16 @@
     <div class="mt-1 relative">
       <ListboxButton
         class="
-          bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left
+          bg-white
+          relative
+          w-full
+          border border-gray-300
+          rounded-md
+          shadow-sm
+          pl-3
+          pr-10
+          py-2
+          text-left
           cursor-default
           focus:outline-none
           focus:ring-1
@@ -95,13 +104,11 @@
         </ListboxOptions>
       </transition>
     </div>
-
   </Listbox>
-
 </template>
 
 <script lang="ts">
-import { ref, PropType, computed} from "vue";
+import { ref, PropType, computed } from "vue";
 import {
   Listbox,
   ListboxButton,
@@ -110,8 +117,7 @@ import {
   ListboxOptions,
 } from "@headlessui/vue";
 import { CheckIcon, SelectorIcon } from "@heroicons/vue/solid";
-import { mdiAccount, mdiLoading } from '@mdi/js'
-import ReSvg from './ReSvg.vue';
+import { mdiAccount } from "@mdi/js";
 
 interface ListItem {
   label: string;
@@ -128,7 +134,6 @@ export default {
     ListboxOptions,
     CheckIcon,
     SelectorIcon,
-    ReSvg,
   },
   props: {
     data: {
@@ -148,13 +153,15 @@ export default {
   },
   setup(props, cxt) {
     const selected = ref<ListItem | null>(null);
-    const labelMap = new Map(props.data.map((item) => [item.value, item.label]));
+    const labelMap = new Map(
+      props.data.map((item) => [item.value, item.label])
+    );
     const currentLabel = computed(() => labelMap.get(props.modelValue));
     const selectedChanged = (item: ListItem) => {
       // selected.value = item;
       console.log(item.value);
-      cxt.emit('update:modelValue', item.value);
-    }
+      cxt.emit("update:modelValue", item.value);
+    };
     const foundItem = computed(() =>
       props.data.find((item) => item.value === props.modelValue)
     );

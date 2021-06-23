@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    :class="[paddingClass, classByLoading]"
+    :class="[paddingClass, typeClass]"
     v-bind="$attrs"
     :disabled="disabled || loading"
     class="
@@ -10,26 +10,23 @@
       inline-flex
       items-center
       border border-transparent
-
       shadow-sm
       text-sm
       font-medium
       rounded-md
-      text-white
-      bg-indigo-600
+      focus:outline-none focus:ring-2 focus:ring-offset-2
+      disabled:opacity-70 disabled:cursor-default
     "
   >
     <div class="inline-flex" :class="{ 'opacity-0': loading }">
       <slot></slot>
       <component
-        v-if="heroiconComp"
+        v-if="affixIcon"
         class="ml-2 -mr-1 h-5 w-5"
         aria-hidden="true"
-        :is="heroiconComp"
+        :is="affixIcon"
       ></component>
     </div>
-    <!-- v-show="loading" -->
-    <!-- animate-spin -->
     <div
       v-if="loading"
       class="
@@ -48,10 +45,13 @@
   </button>
 </template>
 
-<script type="ts">
-import { computed } from "vue";
+<script lang="ts">
+import { computed, PropType } from "vue";
 import { mdiLoading } from "@mdi/js";
 import ReSvg from "@/components/ui/ReSvg.vue";
+
+const buttonTypes = ["primary", "secondary", "white"] as const;
+type buttonType = typeof buttonTypes[number];
 
 export default {
   components: {
@@ -62,30 +62,46 @@ export default {
       type: String,
       default: "px-3 py-1.5",
     },
-    heroiconComp: {
+    affixIcon: {
       type: Function,
     },
     loading: {
       type: Boolean,
       default: false,
     },
+    bg: {
+      type: String,
+      default: "indigo",
+    },
+    variant: {
+      type: String as PropType<buttonType>,
+      default: "primary",
+    },
     disabled: Boolean,
   },
   setup(props, ctx) {
-    const classByLoading = computed(() => {
-      if (props.loading || props.disabled) return "opacity-70 cursor-default";
-      return "hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500";
+    const typeClass = computed(() => {
+      let result = "";
+      switch (props.variant) {
+        case "primary":
+        case "secondary":
+          result = `text-white bg-${props.bg}-600 hover:bg-${props.bg}-700 focus:ring-${props.bg}-500`;
+          break;
+        case "white":
+          result = `border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-${props.bg}-500`;
+          break;
+        default:
+          break;
+      }
+      return result;
     });
+
     return {
       mdiLoading,
-      classByLoading,
+      typeClass,
     };
-  },
-  methods: {
-    test() {},
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

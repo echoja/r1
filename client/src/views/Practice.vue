@@ -1,8 +1,54 @@
 <template>
-  <div class="container text-left ml-5">
+  <div id="hi" class="container text-left ml-5">
     <h1>Practice</h1>
 
-    <div>Block element</div>
+    <hr />
+    <div>
+      <a href = "https://sites.google.com/view/hyojungkim">
+      <img src="../assets/Title_top.gif" alt="Title_top"/>
+      </a>
+    </div>
+    <hr />
+
+    <table border = 2>
+      <tr><td colspan=3> <img src="../assets/affiliation.jpg" alt="affiliation"/></td></tr>
+      <tr>
+        <td>
+          <a href="https://www.nature.com/articles/s41598-020-58088-2">
+            <img src="../assets/Research_1.jpg" alt="affiliation" style="max-width:100%"/>
+          </a>
+        </td>
+        <td> <img src="../assets/ITProject_2.png" alt="ITProject"/> </td>
+        <td> <img src="../assets/Clinical_practice_3.png" alt="ITProject"/> </td>
+      </tr>
+    </table>
+
+    <hr />
+    <img src="../assets/Summary.jpg" alt="Summary"/>
+    <hr />
+
+    <div style ="border" float:right>
+    Contact: <a href="mailto:arcane@skku.edu">arcane@skku.edu</a>
+    </div>
+
+    <p>Paragraph</p>
+
+    <div style="display: block;">hello</div>
+    <div style="display: block;">hello</div>
+    <div style="display: block;">hello</div>
+    <div style="display: inline-block;">hello</div>
+    <div style="display: inline-block;">hello</div>
+    <div style="display: inline-block;">hello</div>
+    <div style="display: inline-block;">hello</div>
+    <div style="display: block;">hello</div>
+    <div style="display: inline; height: 100px;">ABCDE</div>
+    <div style="display: inline; height: 100px;">ABCDE</div>
+    <div style="display: inline; height: 100px;">ABCDE</div>
+    <div style="display: inline-block; height: 100px;">ABCDE</div>
+    <div style="display: inline-block; height: 100px;">ABCDE</div>
+    <div style="display: inline-block; height: 100px;">ABCDE</div>
+
+
 
     <h1>Page title</h1>
     <h2>Subheading</h2>
@@ -23,7 +69,7 @@
     <p><strong>Bold text</strong></p>
     <p><em>Italic text</em></p>
     <p><span style="text-decoration: underline">Underlined text</span></p>
-    <abbr title="Hypertext Markup Language">HTML</abbr>
+    <p><span class="test">Underlined text</span></p>
     <hr />
 
     <table>
@@ -62,6 +108,11 @@
       <li>Second</li>
       <li>Third</li>
     </ul>
+    <ol>
+      <li>First</li>
+      <li>Second</li>
+      <li>Third</li>
+    </ol>
     <hr />
     <form @submit.prevent="none">
       Name: <input name="name" type="text" /> <br />
@@ -73,13 +124,16 @@
         <option value="female">Female</option>
       </select>
       <br />
-      <input checked="checked" name="newsletter" type="radio" value="daily" />
-      Daily <input name="newsletter" type="radio" value="weekly" /> Weekly<br />
+
+      <input checked="checked" name="newsletter" type="radio" value="daily" />Daily
+      <input name="newsletter" type="radio" value="weekly" /> Weekly
+
+      <br />
       <textarea cols="20" name="comments" rows="5">Comment</textarea><br />
-      <label>
-        <input name="terms" type="checkbox" value="tandc" />
+      <label for="terms">
         Accept terms
       </label>
+      <input id="terms" name="terms" type="checkbox" value="tandc" />
       <br />
       <input type="submit" value="Submit" />
     </form>
@@ -102,20 +156,16 @@
       <p>{{ easyNumber }}</p>
       <button @click="addEasyNumber">쉬운 숫자 추가</button>
     </div>
-    <Icon :icon="icons.chart" height="24" />
 
   </div>
 </template>
 
 
 <script>
-import { Icon } from "@iconify/vue";
-import areaChartOutlined from "@iconify-icons/ant-design/area-chart-outlined";
 import { onMounted, ref } from "vue";
 export default {
   name: "Practice",
   components: {
-    Icon,
   },
   setup(props, ctx) {
     onMounted(() => {
@@ -150,4 +200,9 @@ export default {
 </script>
 
 <style>
+
+.test {
+  text-decoration: underline;
+}
+
 </style>

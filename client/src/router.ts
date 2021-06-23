@@ -11,7 +11,11 @@ const routes: VueRouter.RouteRecordRaw[] = [
     path: "/practice",
     component: () => import("@/views/Practice.vue"),
   },
-  { name: "Home", path: "/search/:group?/:search?", component: () => import("@/views/Home.vue") },
+  {
+    name: "Search",
+    path: "/search",
+    component: () => import("@/views/Search.vue"),
+  },
 ];
 
 const router = VueRouter.createRouter({
