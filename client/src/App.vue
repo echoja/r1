@@ -1,9 +1,11 @@
 <template>
-  <div class="text-4xl mb-3 font-bold mt-4">Research</div>
-  <div class="p-3">
-    <router-link class="mr-3" :to="{ name: 'Search' }">Search</router-link>
-    <router-link class="mr-3" :to="{ name: 'About' }">About</router-link>
-    <router-link :to="{ name: 'Practice' }"><b>Practice</b></router-link>
+  <div class="mx-auto" style="width: 1600px">
+    <div class="text-4xl mb-3 font-bold mt-4">Research</div>
+    <div class="p-3">
+      <router-link class="mr-3" :to="{ name: 'Search' }">Search</router-link>
+      <router-link class="mr-3" :to="{ name: 'About' }">About</router-link>
+      <router-link :to="{ name: 'Practice' }"><b>Practice</b></router-link>
+    </div>
   </div>
   <hr class="mb-4" />
   <router-view v-slot="{ Component }">

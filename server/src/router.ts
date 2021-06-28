@@ -2,6 +2,7 @@ import { enumSearchGroup } from "@const";
 import { Router } from "express";
 import { drugSearch } from "./db";
 import { aw, contains } from "./util";
+import { utils as xlsxUtils, write as xlsxWrite } from "xlsx";
 
 export const apiRouter = Router();
 
@@ -38,3 +39,30 @@ apiRouter.get(
     res.json(result);
   })
 );
+
+apiRouter.get("/download/:group/:search", aw(async (req, res, next) => {
+  const { group, search } = req.params;
+  if (
+    typeof group !== "string" ||
+    typeof search !== "string" ||
+    !contains(enumSearchGroup, group)
+  ) {
+    res.status(403).send();
+    return;
+  }
+  const result = await drugSearch(group, search);
+  const excel = xlsxUtils.json_to_sheet(result as any[]);
+  const book = xlsxUtils.book_new();
+  xlsxUtils.book_append_sheet(book, excel, "export");
+  const buffer = xlsxWrite(book, { type: "buffer" });
+  // const blob = new Blob([array]);
+  // const now = new Date();
+  // saveAs(
+  //   blob,
+  //   `research_result_${
+  //     search.value
+  //   }_${now.getFullYear()}-${now.getMonth()}-${now.getDate()}.xlsx`
+  // );
+  res.send(buffer);
+  // res.sendFile(result);
+}));

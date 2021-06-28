@@ -24,7 +24,11 @@
       </div>
       <div v-if="tableData.length !== 0">
         <div class="flex justify-end mb-3">
-          <ReButton variant="white" @click="excelClicked">
+          <ReButton
+            variant="white"
+            @click="excelClicked"
+            :loading="excelLoading"
+          >
             <ReSvg :path="mdiFileExcel"></ReSvg>
           </ReButton>
         </div>
@@ -34,6 +38,12 @@
           :thClass="thClass"
           :linkGen="linkGen"
           :currentPage="currentPage"
+          @align="
+            $router.push({
+              name: 'Search',
+              query: { ...$route.query, page: 1 },
+            })
+          "
         ></ReTable>
       </div>
     </div>
@@ -41,37 +51,42 @@
 </template>
 
 <script lang="ts">
-import { computed, onMounted, reactive, Ref, ref, watch } from "vue";
+import {
+  computed,
+  defineAsyncComponent,
+  onMounted,
+  reactive,
+  Ref,
+  ref,
+} from "vue";
 import { searchGroupNameMap } from "@const";
 import { searchGroupKey } from "@type";
-import { store } from "@/loader";
-import ReSelect from "@/components/ui/ReSelect.vue";
-import ReButton from "@/components/ui/ReButton.vue";
-import ReInput from "@/components/ui/ReInput.vue";
-import ReTable from "@/components/ui/ReTable.vue";
-import ReSvg from "@/components/ui/ReSvg.vue";
 import { SearchIcon } from "@heroicons/vue/solid";
 import { mdiFileExcel } from "@mdi/js";
+import { ReTableField } from "@/components/ui/ui-types";
 import {
   useRouter,
   useRoute,
   onBeforeRouteUpdate,
   RouteLocationRaw,
 } from "vue-router";
-import * as XLSX from "xlsx";
 import axios from "axios";
-import * as fileSaver from "file-saver";
+import { saveAs } from "file-saver";
 
 const axiosLocal = axios.create();
 
 export default {
   name: "Search",
   components: {
-    ReSelect,
-    ReButton,
-    ReInput,
-    ReTable,
-    ReSvg,
+    ReSelect: defineAsyncComponent(
+      () => import("@/components/ui/ReSelect.vue")
+    ),
+    ReButton: defineAsyncComponent(
+      () => import("@/components/ui/ReButton.vue")
+    ),
+    ReInput: defineAsyncComponent(() => import("@/components/ui/ReInput.vue")),
+    ReTable: defineAsyncComponent(() => import("@/components/ui/ReTable.vue")),
+    ReSvg: defineAsyncComponent(() => import("@/components/ui/ReSvg.vue")),
   },
   setup(props, cxt) {
     const router = useRouter();
@@ -126,21 +141,14 @@ export default {
     const noResult = ref(false);
     const tableData = ref(reactive<Record<string, string>[]>([]));
     const thClass = "";
-    const fields = ref(
-      reactive<
-        {
-          key: string;
-          label: string;
-          tdClass?: string;
-        }[]
-      >([])
-    );
+    const fields = ref(reactive<ReTableField>([]));
     const makeFields = (data: Record<string, string>[]) => {
       fields.value = reactive(
         Object.keys(data[0]).map((colName) => ({
           key: colName,
           label: colName,
           tdClass: "",
+          align: true,
         }))
       );
     };
@@ -194,19 +202,22 @@ export default {
     });
 
     /** excel download */
+    const excelLoading = ref(false);
     const excelClicked = () => {
-      const excel = XLSX.utils.json_to_sheet(tableData.value);
-      const book = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(book, excel, "export");
-      const array = XLSX.write(book, { type: "array" });
-      const blob = new Blob([array]);
+      // const excel = xlsxUtils.json_to_sheet(tableData.value);
+      // const book = xlsxUtils.book_new();
+      // xlsxUtils.book_append_sheet(book, excel, "export");
+      // const array = xlsxWrite(book, { type: "array" });
+      // const blob = new Blob([array]);
+      excelLoading.value = true;
       const now = new Date();
-      fileSaver.saveAs(
-        blob,
+      saveAs(
+        `/api/download/${group.value}/${search.value}`,
         `research_result_${
           search.value
         }_${now.getFullYear()}-${now.getMonth()}-${now.getDate()}.xlsx`
       );
+      excelLoading.value = false;
     };
 
     /** pagination */
@@ -245,6 +256,7 @@ export default {
       thClass,
       tableData,
       excelClicked,
+      excelLoading,
       mdiFileExcel,
       linkGen,
       currentPage,

@@ -1,7 +1,9 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 // import styleImport from "vite-plugin-style-import";
 import * as path from "path";
+import analyze from "rollup-plugin-analyzer";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -29,13 +31,18 @@ export default defineConfig({
   server: {
     port: 29537,
     proxy: {
-      '/api': {
-        target: 'http://58.234.162.208:29540',
+      "/api": {
+        target: "http://58.234.162.208:29540",
         changeOrigin: true,
       },
     },
   },
   define: {},
+  build: {
+    rollupOptions: {
+      plugins: [analyze()],
+    },
+  },
 
   resolve: {
     alias: [
