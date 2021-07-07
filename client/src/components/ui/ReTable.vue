@@ -213,7 +213,7 @@ export default {
     linkGen: {
       type: Function as PropType<(page: number) => RouteLocationRaw>,
       default: (page: number): RouteLocationRaw => ({
-        name: "Search",
+        name: "ClassifySearch",
         query: { page: `${page}` },
       }),
     },

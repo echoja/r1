@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 // declare module "@heroicons/vue/*" {
 //   const content: any;
 //   export default content;
@@ -469,3 +468,14 @@ declare module "@heroicons/vue/outline" {
   export { default as ZoomInIcon } from "@heroicons/vue/outline/esm/ZoomInIcon.js";
   export { default as ZoomOutIcon } from "@heroicons/vue/outline/esm/ZoomOutIcon.js";
 }
+
+export interface MainSidebarItem {
+  name: RouteRecordName | undefined;
+  title: unknown;
+  children: {
+    name: RouteRecordName | undefined;
+    title: unknown;
+  }[];
+}
+
+export type MainSidebarItems = MainSidebarItem[];

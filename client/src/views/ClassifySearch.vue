@@ -1,5 +1,5 @@
 <template>
-  <div class="text-left mx-auto" :style="{ width: '1600px' }">
+  <div class="text-left mx-auto mt-20" :style="{ width: '1600px' }">
     <div class="mx-10">
       <div class="flex justify-center mb-3">
         <ReSelect
@@ -76,7 +76,7 @@ import { saveAs } from "file-saver";
 const axiosLocal = axios.create();
 
 export default {
-  name: "Search",
+  name: "ClassifySearch",
   components: {
     ReSelect: defineAsyncComponent(
       () => import("@/components/ui/ReSelect.vue")
@@ -125,7 +125,7 @@ export default {
         return;
       }
       router.push({
-        name: "Search",
+        name: "ClassifySearch",
         query: { group: group.value, search: search.value },
       });
     };
@@ -234,7 +234,7 @@ export default {
     });
     const linkGen = (page: number): RouteLocationRaw => {
       return {
-        name: "Search",
+        name: "ClassifySearch",
         query: {
           ...route.query,
           page,
