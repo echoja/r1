@@ -30,59 +30,52 @@ export function dbRequest<Row = any>(
   });
 }
 
-export const dbConfig: tedious.ConnectionConfig = {
-  server: process.env.DB_HOST, // or "localhost"
-  options: {
-    encrypt: false,
-    rowCollectionOnDone: true,
-    rowCollectionOnRequestCompletion: true,
-    database: "Drug_Current",
-  },
-  authentication: {
-    type: "default",
+export function createConnection(): tedious.Connection {
+  const dbConfig: tedious.ConnectionConfig = {
+    server: process.env.DB_HOST, // or "localhost"
     options: {
-      userName: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
+      encrypt: false,
+      rowCollectionOnDone: true,
+      rowCollectionOnRequestCompletion: true,
+      database: "Drug_Current",
     },
-  },
-};
-
-
-
-export const dbTest = async (): Promise<void> => {
-  try {
-    await dbConenct(connection);
-    const res = await dbRequest(
-      connection,
-      "EXEC SP_Drug_Search_by_CodeGroup 'I', 'acetaminophen';"
-    );
-  } catch (e) {
-    console.error(e);
-  }
-};
-
-const connection = new tedious.Connection(dbConfig);
+    authentication: {
+      type: "default",
+      options: {
+        userName: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+      },
+    },
+  };
+  const connection = new tedious.Connection(dbConfig);
+  return connection;
+}
 
 type DrugSearchResult = ReadonlyArray<Record<string, string>>;
 
-export function organizeDbResponse<T>(rows: ColumnValue<T>[][]): Record<string, T>[] {
+export function organizeDbResponse<T>(
+  rows: ColumnValue<T>[][]
+): Record<string, T>[] {
   const result: Record<string, T>[] = [];
   rows.forEach((row) => {
-    const new_row:Record<string, T> = {};
+    const new_row: Record<string, T> = {};
     row.forEach((colValue) => {
       new_row[colValue.metadata.colName] = colValue.value;
-    })
+    });
     result.push(new_row);
   });
   return result;
 }
 
-export async function drugSearch(group: searchGroupKey, search: string): Promise<DrugSearchResult> {
-  if (group == "all")
-  {
+export async function drugSearch(
+  connection: tedious.Connection,
+  group: searchGroupKey,
+  search: string
+): Promise<DrugSearchResult> {
+  if (group == "all") {
     return [];
   }
-  const sql = `EXEC SP_Drug_Search_by_CodeGroup '${group}', '${search}';`
+  const sql = `EXEC SP_Drug_Search_by_CodeGroup '${group}', '${search}';`;
   const res = await dbRequest(connection, sql);
   // const res = await dbRequest<ColumnValue<string>[]>(connection, sql);
   const result = organizeDbResponse<string>(res.rows);

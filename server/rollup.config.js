@@ -12,11 +12,15 @@ module.exports = {
     sourcemap: true,
     exports: "default",
   },
-  external: ["express", "connect-history-api-fallback"],
+  external: ["express", "connect-history-api-fallback", "cross-env", "dotenv", "tedious", "xlsx"],
   plugins: [
     commonjs(),
     alias({
       entries: [
+        {
+          find: "@const",
+          replacement: path.resolve(__dirname, "build/const.js"),
+        },
         {
           find: "@",
           replacement: path.resolve(__dirname, "build/server/src/"),

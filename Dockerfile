@@ -14,10 +14,15 @@ COPY ./client/index.html ./
 
 
 COPY ./types.d.ts ./
+COPY ./const.ts ./
 
 RUN npm run build
 
 FROM node:14 AS server-build-bundle
+
+WORKDIR /
+COPY ./packag*.json ./
+RUN npm install
 
 WORKDIR /server
 
@@ -28,6 +33,7 @@ COPY ./server/src ./src
 COPY ./server/rollup.config.js ./
 COPY ./server/tsconfig.json ./
 COPY ./types.d.ts ../
+COPY ./const.ts ../
 RUN npm run build-simple && npm run rollup
 
 FROM node:14

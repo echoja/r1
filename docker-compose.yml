@@ -3,8 +3,12 @@ version: '3'
 
 services:
   web:
-    build: .
+    image: eszqsc112/research-s:latest
     ports:
       - "29539:80"
     environment:
       - NODE_ENV=production
+    volumes:
+      - ./server/.env:/.env:ro
+    extra_hosts:
+      - host.docker.internal:host-gateway
